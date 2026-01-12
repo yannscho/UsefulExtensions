@@ -3,26 +3,26 @@ import SwiftUI
 extension Date {
     var calendar: Calendar { Calendar.current }
     
-    var mondayOfWeek: Date {
+    public var mondayOfWeek: Date {
         let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
         return calendar.date(from: components) ?? Date.now
     }
     
-    func adding(_ value: Int, _ component: Calendar.Component) -> Date {
+    public func adding(_ value: Int, _ component: Calendar.Component) -> Date {
         calendar.date(byAdding: component, value: value, to: self) ?? Date.now
     }
     
-    func isSameDay(as other: Date) -> Bool {
+    public func isSameDay(as other: Date) -> Bool {
         calendar.isDate(self, inSameDayAs: other)
     }
     
-    var asString: DateFormatter.Output {
+    public var asString: DateFormatter.Output {
         DateFormatter.Output(date: self)
     }
 }
 
 extension DateFormatter {
-    struct Output {
+    public struct Output {
         let date: Date
         
         var abbreviated: String {
