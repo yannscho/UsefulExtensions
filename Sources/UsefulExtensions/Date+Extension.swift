@@ -25,39 +25,39 @@ extension DateFormatter {
     public struct Output {
         let date: Date
         
-        var abbreviated: String {
+        public var abbreviated: String {
             date.formatted(date: .abbreviated, time: .omitted)
         }
         
-        var long: String {
+        public var long: String {
             date.formatted(date: .long, time: .omitted)
         }
         
-        var numeric: String {
+        public var numeric: String {
             date.formatted(date: .numeric, time: .omitted)
         }
         
-        var full: String {
+        public var full: String {
             date.formatted(date: .complete, time: .omitted)
         }
         
-        var weekdayShort: String {
+        public var weekdayShort: String {
             date.formatted(.dateTime.weekday(.abbreviated))
         }
         
-        var weekday: String {
+        public var weekday: String {
             date.formatted(.dateTime.weekday(.wide))
         }
         
-        var monthShort: String {
+        public var monthShort: String {
             date.formatted(.dateTime.month(.abbreviated))
         }
         
-        var month: String {
+        public var month: String {
             date.formatted(.dateTime.month(.wide))
         }
         
-        var day: String {
+        public var day: String {
             date.formatted(.dateTime.day())
         }
     }
