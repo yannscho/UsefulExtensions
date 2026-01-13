@@ -3,17 +3,41 @@ import SwiftUI
 extension Date {
     var calendar: Calendar { Calendar.current }
     
-    public var mondayOfWeek: Date {
-        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-        return calendar.date(from: components) ?? Date.now
-    }
-    
     public func adding(_ value: Int, _ component: Calendar.Component) -> Date {
         calendar.date(byAdding: component, value: value, to: self) ?? Date.now
     }
     
     public func isSameDay(as other: Date) -> Bool {
         calendar.isDate(self, inSameDayAs: other)
+    }
+    
+    public func firstDay(of component: Calendar.Component) -> Date {
+        switch component {
+        case .weekOfYear, .weekOfMonth:
+            return calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) ?? self
+        case .month:
+            return calendar.date(from: calendar.dateComponents([.year, .month], from: self)) ?? self
+        case .year:
+            return calendar.date(from: calendar.dateComponents([.year], from: self)) ?? self
+        default:
+            return self
+        }
+    }
+    
+    public func lastDay(of component: Calendar.Component) -> Date {
+        switch component {
+        case .weekOfYear, .weekOfMonth:
+            let firstDay = firstDay(of: .weekOfYear)
+            return calendar.date(byAdding: .day, value: 6, to: firstDay) ?? self
+        case .month:
+            let firstDay = firstDay(of: .month)
+            return calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDay) ?? self
+        case .year:
+            let firstDay = firstDay(of: .year)
+            return calendar.date(byAdding: DateComponents(year: 1, day: -1), to: firstDay) ?? self
+        default:
+            return self
+        }
     }
     
     public var asString: DateFormatter.Output {
@@ -64,16 +88,16 @@ extension DateFormatter {
 }
 
 /*
-/// First day of the month
-    var startOfMonth: Date {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: self)
-        return calendar.date(from: components)!
-    }
-    
-    /// Last day of the month
-    var endOfMonth: Date {
-        let calendar = Calendar.current
-        return calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
-    }
-*/
+ /// First day of the month
+ var startOfMonth: Date {
+ let calendar = Calendar.current
+ let components = calendar.dateComponents([.year, .month], from: self)
+ return calendar.date(from: components)!
+ }
+ 
+ /// Last day of the month
+ var endOfMonth: Date {
+ let calendar = Calendar.current
+ return calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
+ }
+ */
