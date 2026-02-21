@@ -77,6 +77,14 @@ extension DateFormatter {
             date.formatted(.dateTime.weekday(.wide))
         }
         
+        public var yearShort: String {
+            date.formatted(.dateTime.year(.twoDigits))
+        }
+        
+        public var year: String {
+            date.formatted(.dateTime.year(.extended()))
+        }
+        
         public var monthShort: String {
             date.formatted(.dateTime.month(.abbreviated))
         }
